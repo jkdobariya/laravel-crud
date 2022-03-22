@@ -100,7 +100,9 @@
                                                 <a href="{{ route('user.edit', $user->id) }}"
                                                     class="btn btn-sm text-success"><i class="fa fa-edit"></i></a>
                                                 <form action="{{ route('user.destroy', $user->id) }}"
-                                                    class="float-right inline-block">
+                                                    class="float-right inline-block" method="POST">
+                                                    @csrf
+                                                    @method('delete')
                                                     <button type="submit" class="btn btn-sm text-danger"><i
                                                             class="fa fa-trash"></i></button>
                                                 </form>

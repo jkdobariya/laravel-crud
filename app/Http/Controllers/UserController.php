@@ -65,9 +65,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($userId)
     {
-        //
+        $user = $this->userRepository->getUser($userId);
+        return view('user.show', compact('user'));
     }
 
     /**
@@ -76,9 +77,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($userId)
     {
-        $user = $this->userRepository->getUser($id);
+        $user = $this->userRepository->getUser($userId);
         return view('user.edit', compact('user'));
     }
 
@@ -98,7 +99,7 @@ class UserController extends Controller
         // $this->field->password)
         $userDetails = $userDetails->only($this->field);
         $this->userRepository->updateUser($userDetails, $userId);
-        return redirect()->route('user.index')->with('success', 'User Created Successfully!');
+        return redirect()->route('user.index')->with('warning', 'User Updated Successfully!');
     }
 
     /**
@@ -107,8 +108,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($userId)
     {
-        //
+        $this->userRepository->deleteUser($userId);
+        return redirect()->route('user.index')->with('danger', 'User Deleted Successfully!');
     }
 }
