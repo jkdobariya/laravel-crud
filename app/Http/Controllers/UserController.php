@@ -4,19 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repository\Interfaces\UserRepositoryInterface as UserRepositoryInterface;
+use App\Http\Requests\UserStoreRequest;
 
 class UserController extends Controller
 {
+
+    private UserRepositoryInterface $userRepository;
+    private $field = ['firstname', 'lastname', 'username', 'email', 'phone', 'password'];
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(UserRepositoryInterface $user)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->middleware('auth');
-        $this->user = $user;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -26,7 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->getUsers();
+        $users = $this->userRepository->getUsers();
         // return $users;
         return view('user.index', compact('users'));
     }
@@ -38,7 +42,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -47,9 +51,11 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        $userDetails = $request->only($this->field);
+        $this->userRepository->storeUser($userDetails);
+        return redirect()->route('user.index')->with('message', 'User Created Successfully!');
     }
 
     /**

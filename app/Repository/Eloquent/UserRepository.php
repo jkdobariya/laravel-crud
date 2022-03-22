@@ -32,9 +32,9 @@ class UserRepository implements UserRepositoryInterface
 
 
 
-    public function storeUser($request)
+    public function storeUser(array $userDetails)
     {
-        // <!-- return $this->user->findUser($id); -->
+        return User::create($userDetails);
     }
 
 

@@ -10,9 +10,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6 mb-3">
-                                <button class="btn btn-primary text-light btn-sm" type="button">
+                                <a href="{{ route('user.create') }}" class="btn btn-primary text-light btn-sm"
+                                    type="button">
                                     <i class="fa fa-plus"></i> Create
-                                </button>
+                                </a>
                                 <button class="btn btn-warning btn-sm" type="button">
                                     <i class="fa fa-edit"></i> Edit
                                 </button>
