@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repository\Interfaces\UserRepositoryInterface as UserRepositoryInterface;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 
 class UserController extends Controller
 {
@@ -55,7 +56,7 @@ class UserController extends Controller
     {
         $userDetails = $request->only($this->field);
         $this->userRepository->storeUser($userDetails);
-        return redirect()->route('user.index')->with('message', 'User Created Successfully!');
+        return redirect()->route('user.index')->with('success', 'User Created Successfully!');
     }
 
     /**
@@ -77,7 +78,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->userRepository->getUser($id);
+        return view('user.edit', compact('user'));
     }
 
     /**
@@ -87,9 +89,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $userDetails, $userId)
     {
-        //
+        if (is_null($userDetails->password)) {
+            $this->field = ['firstname', 'lastname', 'username', 'email', 'phone'];
+        }
+
+        // $this->field->password)
+        $userDetails = $userDetails->only($this->field);
+        $this->userRepository->updateUser($userDetails, $userId);
+        return redirect()->route('user.index')->with('success', 'User Created Successfully!');
     }
 
     /**

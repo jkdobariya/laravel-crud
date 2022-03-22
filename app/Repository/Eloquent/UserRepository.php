@@ -25,28 +25,28 @@ class UserRepository implements UserRepositoryInterface
     }
 
 
-    public function getUser($id)
+    public function getUser($userId)
     {
-        return $this->user->findUser($id);
+        return $this->user->findOrFail($userId);
     }
 
 
 
     public function storeUser(array $userDetails)
     {
-        return User::create($userDetails);
+        return $this->user->create($userDetails);
     }
 
 
 
-    public function updateUser($request, $id)
+    public function updateUser($userDetails, $userId)
     {
-        return $this->user->findUser($id);
+        return $this->user->whereId($userId)->update($userDetails);
     }
 
 
-    public function deleteUser($id)
+    public function deleteUser($userId)
     {
-        return $this->user->deleteUser($id);
+        return $this->user->deleteUser($userId);
     }
 }

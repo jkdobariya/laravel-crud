@@ -8,8 +8,8 @@ interface UserRepositoryInterface
 
 
     public function getUsers();
-    public function getUser($id);
+    public function getUser($userId);
     public function storeUser(array $userDetails);
-    public function updateUser(array $userDetails, $id);
-    public function deleteUser($id);
+    public function updateUser(array $userDetails, $userId);
+    public function deleteUser($userId);
 }
