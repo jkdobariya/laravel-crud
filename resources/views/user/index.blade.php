@@ -63,7 +63,7 @@
                         </div>
                         <table class="table table-striped table-sm table-bordered">
                             <thead>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" name="checkbox" id="checkbox"></th>
                                 <th>Fullname</th>
                                 <th>Username</th>
                                 <th>Phone</th>
@@ -75,7 +75,7 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>
-                                            <input type="checkbox" value="rows[{{ $user->id }}]">
+                                            <input type="checkbox" value="rows[{{ $user->id }}]" form="userbulkaction">
                                         </td>
                                         <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                                         <td>{{ $user->username }}</td>
@@ -127,4 +127,21 @@
             </div>
         </div>
     </div>
+    <script>
+        const cb = document.querySelector('#checkbox');
+
+        cb.addEventListener('click', () => {
+            let checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+
+            if (cb.checked == true) {
+                for (var checkbox of checkboxes) {
+                    checkbox.checked = true;
+                }
+            } else {
+                for (var checkbox of checkboxes) {
+                    checkbox.checked = false;
+                }
+            }
+        });
+    </script>
 @endsection

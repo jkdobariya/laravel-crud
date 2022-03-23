@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone')->after('email');
             $table->string('phone_verified_at')->after('email_verified_at')->nullable();
             $table->enum('status', ['A', 'P', 'D'])->default('P');
+            $table->softDeletes();
         });
     }
 
@@ -39,6 +40,7 @@ return new class extends Migration
             $table->dropColumn('phone');
             $table->dropColumn('phone_verified_at');
             $table->dropColumn('status');
+            $table->dropSoftDeletes();
         });
     }
 };
